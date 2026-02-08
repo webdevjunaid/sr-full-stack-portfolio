@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { motion } from 'framer-motion';
+import { m, motion } from 'framer-motion';
 import { ArrowRight, Github, Mail } from 'lucide-react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -23,12 +23,15 @@ const Contact: React.FC = () => {
   });
 
   const onSubmit = async (data: ContactFormValues) => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    alert("Message sent! (Simulated)");
+    // Construct mailto link
+    const subject = encodeURIComponent('Contact Form Submission from ' + data.name);
+    const body = encodeURIComponent(
+      `Name: ${data.name}\nEmail: ${data.email}\nMessage: ${data.message}`
+    );
+    const mailtoLink = `mailto:junaidch249249@gmail.com?subject=${subject}&body=${body}`;
+    window.location.href = mailtoLink;
     reset();
   };
-
   return (
     <section id="contact" className="py-32 bg-background">
       <div className="container mx-auto px-4">
